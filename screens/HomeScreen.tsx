@@ -1,14 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, Image, TouchableOpacity, View } from 'react-native'
 import EmergencyIcon from '../assets/3064330.png'
+import { HomeProps } from '../types'
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }: HomeProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>report an emergency</Text>
             <View style={[styles.gradient, styles.gradient1]}>
                 <View style={[styles.gradient, styles.gradient2]}>
-                    <TouchableOpacity style={styles.emergencyBtn}>
+                    <TouchableOpacity
+                        style={styles.emergencyBtn}
+                        onPress={() => navigation.navigate('Report')}
+                    >
                         <Image
                             source={EmergencyIcon}
                             style={styles.emergencyIcon}

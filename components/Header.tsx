@@ -1,10 +1,33 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    TouchableOpacityProps,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'
 import ProfilePicture from '../assets/motfd.jpeg'
+import { HeaderProps, RootStackParamList } from '../types'
 
-export default function Header() {
+function BackButton(props: TouchableOpacityProps) {
+    return (
+        <TouchableOpacity {...props}>
+            <Ionicons name="ios-arrow-back" size={36} color="white" />
+        </TouchableOpacity>
+    )
+}
+
+export default function Header({ navigation }: HeaderProps) {
+    const navState = navigation.getState()
+    const routeName = navState.routeNames[
+        navState.index
+    ] as keyof RootStackParamList
+    const isHome = routeName === 'Home'
+
     return (
         <LinearGradient
             colors={['#3A1C71', 'rgba(244,102,102,1)']}
@@ -15,7 +38,11 @@ export default function Header() {
         >
             <SafeAreaView style={styles.container}>
                 <View style={styles.content}>
-                    <Text style={styles.text}>hackHer</Text>
+                    {isHome ? (
+                        <Text style={styles.text}>hackHer</Text>
+                    ) : (
+                        <BackButton onPress={() => navigation.goBack()} />
+                    )}
                     <Image source={ProfilePicture} style={styles.avatar} />
                 </View>
             </SafeAreaView>

@@ -5,8 +5,10 @@ import { useRecoilState } from 'recoil'
 import { userState } from '../store/store'
 import HomeScreen from '../screens/HomeScreen'
 import Header from '../components/Header'
+import ReportScreen from '../screens/ReportScreen'
+import { RootStackParamList } from '../types'
 
-const Stack = createNativeStackNavigator()
+const RootStack = createNativeStackNavigator<RootStackParamList>()
 
 export function Navigation() {
     const [user] = useRecoilState(userState)
@@ -15,15 +17,16 @@ export function Navigation() {
         <></>
     ) : (
         <>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <RootStack.Screen name="Home" component={HomeScreen} />
+            <RootStack.Screen name="Report" component={ReportScreen} />
         </>
     )
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ header: Header }}>
+            <RootStack.Navigator screenOptions={{ header: Header }}>
                 {screens}
-            </Stack.Navigator>
+            </RootStack.Navigator>
         </NavigationContainer>
     )
 }
