@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import React from 'react'
+import { RecoilRoot } from 'recoil'
+import { useFonts } from 'expo-font'
+import { Roboto_500Medium } from '@expo-google-fonts/roboto'
+import { RobotoCondensed_400Regular } from '@expo-google-fonts/roboto-condensed'
+import { Raleway_700Bold } from '@expo-google-fonts/raleway'
+import SplashScreen from './components/SplashScreen'
+import { Navigation } from './navigation'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const [fontsLoaded] = useFonts({
+        Roboto_500Medium,
+        RobotoCondensed_400Regular,
+        Raleway_700Bold,
+    })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    if (!fontsLoaded) {
+        return <SplashScreen />
+    } else {
+        return (
+            <RecoilRoot>
+                <SafeAreaProvider>
+                    <Navigation />
+                    <StatusBar />
+                </SafeAreaProvider>
+            </RecoilRoot>
+        )
+    }
+}
